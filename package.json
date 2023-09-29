@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy:github":"--base-href=/PwaDemo/.git --name=Lsakho --email=sakho.lamine2k19@gmail.com --no-silent"
+    "deploy:github":"--base-href=/PwaDemo/.git --no-silent"
   },
   "private": true,
   "dependencies": {
