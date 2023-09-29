@@ -1,31 +1,31 @@
-name: Deploy Github Page
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - main # Remplacez par le nom de votre branche principale si nécessaire
 
 jobs:
-  build:
-
+  deploy:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [16.x]
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-   # - run: npm test
-    - run: npm run deploy:github --if-present
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      env:
-        CI: true
-        # Deploy env
-        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }} #
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build -- --prod --base-href=/PwaDemo/
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist/PwaDemo # Assurez-vous que le chemin correspond au répertoire de génération de votre application
